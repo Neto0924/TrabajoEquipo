@@ -16,7 +16,7 @@
 							<div class="caja">
 								<i class="fas fa-id-card"></i>
 								<p>
-									<a href="../mPersonas/index.php">Pacientes</a>
+									<a href="../bPacientes/index.php">Pacientes</a>
 								</p>
 							</div>
 						</div>
@@ -69,7 +69,7 @@
 							<div class="caja">
 								<i class="fas fa-clinic-medical"></i>
 								<p>
-									<a href="">Sucursales</a>
+									<a href="../mSucursales/index.php">Farmacias</a>
 								</p>
 							</div>
 						</div>
