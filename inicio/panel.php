@@ -77,7 +77,7 @@
 							<div class="caja">
 								<i class="fas fa-arrow-alt-circle-right"></i>
 								<p>
-									<a href="">Entradas</a>
+									<a href="../bEntradas/index.php">Entradas</a>
 								</p>
 							</div>
 						</div>
@@ -111,7 +111,7 @@
 							<div class="caja">
 								<i class="fas fa-book-medical"></i>
 								<p>
-									<a href="">Catalogo medicamentos</a>
+									<a href="../mCatalogo_medicamento/index.php">Catalogo medicamentos</a>
 								</p>
 							</div>
 						</div>

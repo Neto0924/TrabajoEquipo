@@ -30,7 +30,7 @@ $consulta=mysql_query("SELECT
 				                        <th>Paciente</th>
 				                        <th>Núm. Seguro</th>
 				                        <th>Tipo Sangre</th>
-				                        <th>Detalle Paciente</th>
+				                        <!-- <th>Detalle Paciente</th> -->
 				                        <th>Editar</th>
 				                        <th>Estatus</th>
 				                      </tr>
@@ -74,11 +74,11 @@ $consulta=mysql_query("SELECT
 				                          	<?php echo $tipo_sangre; ?>
 				                          </p>
 				                        </td>
-				                        <td>
+				                        <!-- <td>
 																<p id="<?php echo "tSexo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
 				                          	<?php echo $detalle; ?>
 				                          </p>	
-																</td>
+										</td> -->
 				                        <td>
 				                          <button id="<?php echo "boton".$n; ?>" <?php echo $desabilitar ?>  type="button" class="btn btn-login btn-sm" 
 				                          onclick="abrirModalEditar(
@@ -110,7 +110,7 @@ $consulta=mysql_query("SELECT
 				                        <th>Paciente</th>
 				                        <th>Núm. Seguro</th>
 				                        <th>Tipo Sangre</th>
-				                        <th>Detalle Paciente</th>
+				                        <!-- <th>Detalle Paciente</th> -->
 				                        <th>Editar</th>
 				                        <th>Estatus</th>
 				                      </tr>

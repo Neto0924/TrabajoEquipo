@@ -66,23 +66,30 @@ $opcionMenu="A";
 				        <section id="alta" style="display: none">
             				<form id="frmAlta">
 								<div class="row">
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-9">
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+										<div class="form-group">
+											<label for="nFarmacia">Nombre Farmacia:</label>
+											<input type="text" id="nFarmacia" class="form-control " autofocus="" required="" placeholder="Escribe el nombre de la farmacia">
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 										<div class="form-group">
 											<label for="nombre">Encargado:</label>
 											<input type="text" id="encargado" class="form-control " autofocus="" required="" placeholder="Escribe el nombre del encargado">
 										</div>
-										<div class="form-group">
-											<label for="nombre">Ubicacion:</label>
-											<input type="text" id="ubicacion" class="form-control " autofocus="" required="" placeholder="Escribe las ubicacion">
-										</div>
 									</div>
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 										<div class="form-group">
 											<label for="abreviatura">Numero de la sucursal:</label>
 											<input type="text" id="nsucursal" class="form-control " required="" placeholder="Escribe el numero de la sucursal">
 										</div>
 									</div>
-									
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-12">
+										<div class="form-group">
+											<label for="nombre">Ubicacion:</label>
+											<input type="text" id="ubicacion" class="form-control " autofocus="" required="" placeholder="Escribe las ubicacion">
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">

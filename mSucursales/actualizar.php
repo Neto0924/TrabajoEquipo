@@ -1,7 +1,9 @@
 <?php
 //se manda llamar la conexion.
 include("../conexion/conexion.php");
+include '../sesiones/verificar_sesion.php';
 
+$idUsuario =  $_SESSION["idUsuario"];
 $nsucursal    = $_POST["nsucursal"];
 $encargado= $_POST["encargado"];
 $ubicacion  = $_POST["ubicacion"];
@@ -17,13 +19,13 @@ $fecha=date("Y-m-d");
 $hora=date ("H:i:s");
 
 mysql_query("SET NAMES utf8");
- $insertar = mysql_query("UPDATE farmacias SET
-							numero_farmacia='$nsucursal',
-							ubicacion='$ubicacion',
+ $insertar = mysql_query("UPDATE entradas SET
+							id_medicamento ='$nsucursal',
+							proveedor='$ubicacion',
 							encargado='$encargado',
 							fecha_registro='$fecha',
 							hora_registro='$hora',
-							id_registro='1'
+							id_registro='$idUsuario'
 						WHERE id_farmacia='$ide'
 							 ",$conexion)or die(mysql_error());
 
