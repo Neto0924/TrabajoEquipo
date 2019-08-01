@@ -3,7 +3,7 @@ include("../sesiones/verificar_sesion.php");
 include'../conexion/conexion.php';
 
 // Variables de configuración
-$titulo="Catálago de Entradas";
+$titulo="Catálago de Salidas";
 $opcionMenu="A";
 
  ?>
@@ -12,7 +12,7 @@ $opcionMenu="A";
 <head>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" type="image/x-icon" href="../img/logo.png">
-	<title >Catalogo de Entradas </title>
+	<title >Catalogo de Salidas </title>
 
 	<!-- Meta para compatibilidad en disposqqqitivos mobiles -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,7 +82,7 @@ $opcionMenu="A";
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 										<div class="form-group">
-										<label for="proveedor">Proveedor:</label>
+										<label for="proveedor">Detalle de salida:</label>
 										<input type="text" id="proveedor" class="form-control " autofocus="" required="" placeholder="Escribe el proveedor">
 										</div>
 									</div>

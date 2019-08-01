@@ -22,3 +22,6 @@ while($row = mysql_fetch_row($consulta))
 }
 
 ?>
+<script>
+ $("#idMedicamento").select2();
+</script>

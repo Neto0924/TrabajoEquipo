@@ -1,22 +1,15 @@
 <?php 
-// Conexion a la base de datoss
-include'../conexion/conexion.php';
+// Conexion a la base de datos
+include '../conexion/conexion.php';
 
 // Codificacion de lenguaje
 mysql_query("SET NAMES utf8");
 
 // Consulta a la base de datos
-$consulta=mysql_query("SELECT id_entrada,
-							(SELECT nombre FROM catalogo_medicamento cm WHERE cm.id_medicamento = entradas.id_medicamento),
-							  id_medicamento,
-							  cantidad,
-							  proveedor,
-							  id_registro,
-							  fecha_registro,
-							  hora_registro,
-							  activo
-							  FROM entradas",$conexion) or die (mysql_error());
-// $row=mysql_fetch_row($consulta)
+$consulta=mysql_query("SELECT 
+					   *
+					   FROM recetas",$conexion) or die (mysql_error());
+//$row=mysql_fetch_row($consulta)
  ?>
 				            <div class="table-responsive">
 				                <table id="example1" class="table table-responsive table-condensed table-bordered table-striped">
@@ -24,10 +17,11 @@ $consulta=mysql_query("SELECT id_entrada,
 				                    <thead align="center">
 				                      <tr class="info" >
 				                        <th>#</th>
-										<th>Medicamento</th>
-										<th>Cantidad</th>
-				                        <th>Surtidor</th>																				
-				                        <th>Editar</th> 
+				                        <th>Nombre</th>
+				                        <th>Matricula</th>
+				                        <th>Carrera</th>
+				                        <th>Sede</th>
+				                        <th>Editar</th>
 				                        <th>Estatus</th>
 				                      </tr>
 				                    </thead>
@@ -36,15 +30,19 @@ $consulta=mysql_query("SELECT id_entrada,
 				                    <?php 
 				                    $n=1;
 				                    while ($row=mysql_fetch_row($consulta)) {
-										$idCatalogoMedicamento   = $row[0];
-										$nombre = $row[1];										
-										$codigo  = $row[3];
-										$proveedor = $row[4];
-										$activo      = $row[8];
-										$idMedicamento = $row[2];
-										$checado=($activo==1)?'checked':'';		
-										$desabilitar=($activo==0)?'disabled':'';
-										$claseDesabilita=($activo==0)?'desabilita':'';
+															$idAlumno          = $row[0];
+															$nomCarrera        = $row[8];
+															$activo            = $row[4];
+															$nomAlumnoCompleto = $row[6].' '.$row[7].' '.$row[5];
+															$idPersona         = $row[1];
+															$idCarrera         = $row[2]; 
+															$noControl         = $row[3];
+															$sede 			   = $row[9];
+															$registro          = $row[10];
+															$idSede            = $row[11];
+															$checado           = ($activo == 1)?'checked' : '';		
+															$desabilitar       = ($activo == 0)?'disabled': '';
+															$claseDesabilita   = ($activo == 0)?'desabilita':'';
 															?>
 				                      <tr>
 				                        <td >
@@ -53,33 +51,40 @@ $consulta=mysql_query("SELECT id_entrada,
 				                          </p>
 				                        </td>
 				                        <td>
-																<p id="<?php echo "tnombre".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-				                          	<?php echo $nombre; ?>
+																<p id="<?php echo "tAlumno".$n; ?>" class="<?php echo $claseDesabilita; ?>">
+				                          	<?php echo $nomAlumnoCompleto; ?>
 				                          </p>
 				                        </td>
 				                        <td>
-																<p id="<?php echo "tcodigo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-				                          	<?php echo $codigo; ?>
-				                          </p>
-										  <td>
-																<p id="<?php echo "ttmedicamento".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-				                          	<?php echo $proveedor	; ?>
+																<p id="<?php echo "tNoControl".$n; ?>" class="<?php echo $claseDesabilita; ?>">
+				                          	<?php echo $noControl; ?>
 				                          </p>
 				                        </td>
+				                        <td>
+																<p id="<?php echo "tCarrera".$n; ?>"  class="<?php echo $claseDesabilita; ?>">
+				                          	<?php echo $nomCarrera; ?>
+				                          </p>
+				                        </td>
+				                        <td>
+																<p id="<?php echo "tCarrera".$n; ?>"  class="<?php echo $claseDesabilita; ?>">
+				                          	<?php echo $sede; ?>
+				                          </p>
+				                        </td>
+				                       
 				                        <td>
 				                          <button id="<?php echo "boton".$n; ?>" <?php echo $desabilitar ?>  type="button" class="btn btn-login btn-sm" 
 				                          onclick="abrirModalEditar(
-																	' <?php echo $idMedicamento ?>',
-											  						'<?php echo $nombre ?>',
-				                          							'<?php echo $codigo ?>',
-				                          							'<?php echo $proveedor ?>',
-																	'<?php echo $idCatalogoMedicamento ?>'
+																	'<?php echo $idAlumno ?>',
+				                          							'<?php echo $idPersona ?>',
+				                          							'<?php echo $idCarrera ?>',
+				                          							'<?php echo $idSede ?>',
+				                          							'<?php echo $noControl ?>'
 				                          							);">
 				                          	<i class="far fa-edit"></i>
 				                          </button>
 				                        </td>
 				                        <td>
-											<input  data-size="small" data-style="android" value="<?php echo "$valor"; ?>" type="checkbox" <?php echo "$checado"; ?>  id="<?php echo "interruptor".$n; ?>"  data-toggle="toggle" data-on="Desactivar" data-off="Activar" data-onstyle="danger" data-offstyle="success" class="interruptor" data-width="100" onchange="status(<?php echo $n; ?>,<?php echo $idCatalogoMedicamento; ?>);">
+											<input  data-size="small" data-style="android" value="<?php echo "$valor"; ?>" type="checkbox" <?php echo "$checado"; ?>  id="<?php echo "interruptor".$n; ?>"  data-toggle="toggle" data-on="Desactivar" data-off="Activar" data-onstyle="danger" data-offstyle="success" class="interruptor" data-width="100" onchange="status(<?php echo $n; ?>,<?php echo $idAlumno; ?>);">
 				                        </td>
 				                      </tr>
 				                      <?php
@@ -91,11 +96,12 @@ $consulta=mysql_query("SELECT id_entrada,
 
 				                    <tfoot align="center">
 				                      <tr class="info">
-									  	<th>#</th>
-										<th>Medicamento</th>
-										<th>Cantidad</th>
-				                        <th>Surtidor</th>																				
-				                        <th>Editar</th> 
+										<th>#</th>
+				                        <th>Nombre</th>
+				                        <th>Matricula</th>
+				                        <th>Carrera</th>
+				                        <th>Sede</th>
+				                        <th>Editar</th>
 				                        <th>Estatus</th>
 				                      </tr>
 				                    </tfoot>
@@ -141,10 +147,13 @@ $consulta=mysql_query("SELECT id_entrada,
                               }
                           },
                          {
-                              text: 'Nuevo Medicamento',
-                              action: function () {
+                              text: 'Nuevo Alumno',
+                              action: function (  ) {
                                       ver_alta();
-                                      llenarMedicamento();
+                                      llenar_carrera();
+                                      llenar_persona();
+                                      llenar_sede();
+
                               },
                               counter: 1
                           },

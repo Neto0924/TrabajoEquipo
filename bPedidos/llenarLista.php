@@ -1,21 +1,25 @@
 <?php 
-// Conexion a la base de datoss
+// Conexion a la base de datos
 include'../conexion/conexion.php';
 
 // Codificacion de lenguaje
 mysql_query("SET NAMES utf8");
 
 // Consulta a la base de datos
-$consulta=mysql_query("SELECT id_entrada,
-							(SELECT nombre FROM catalogo_medicamento cm WHERE cm.id_medicamento = entradas.id_medicamento),
-							  id_medicamento,
-							  cantidad,
-							  proveedor,
-							  id_registro,
-							  fecha_registro,
-							  hora_registro,
-							  activo
-							  FROM entradas",$conexion) or die (mysql_error());
+$consulta=mysql_query("SELECT
+							id_pedido,
+							fecha_pedido,
+							hora_pedido,
+							id_almacen,
+							id_registro,
+							status,
+							total_pedido,
+							total_recibido,
+							diferencia,
+							activo 
+						FROM
+							pedidos_farmacia
+						",$conexion) or die (mysql_error());
 // $row=mysql_fetch_row($consulta)
  ?>
 				            <div class="table-responsive">
@@ -24,10 +28,14 @@ $consulta=mysql_query("SELECT id_entrada,
 				                    <thead align="center">
 				                      <tr class="info" >
 				                        <th>#</th>
-										<th>Medicamento</th>
-										<th>Cantidad</th>
-				                        <th>Surtidor</th>																				
-				                        <th>Editar</th> 
+				                        <th>Fecha de pedido</th>
+				                        <th>Hora de pedido</th>
+				                        <th>Almacen</th>
+				                        <th>Estatus de Pedido</th>
+				                        <th>Total pedido</th>
+				                        <th>Total recibido</th>
+				                        <th>Diferencia</th>
+				                        <th>Editar</th>
 				                        <th>Estatus</th>
 				                      </tr>
 				                    </thead>
@@ -36,50 +44,56 @@ $consulta=mysql_query("SELECT id_entrada,
 				                    <?php 
 				                    $n=1;
 				                    while ($row=mysql_fetch_row($consulta)) {
-										$idCatalogoMedicamento   = $row[0];
-										$nombre = $row[1];										
-										$codigo  = $row[3];
-										$proveedor = $row[4];
-										$activo      = $row[8];
-										$idMedicamento = $row[2];
+										$idPedido  = $row[0];
+										$fecha   = $row[1];
+										$hora   = $row[2];
+										$almacen = $row[3];
+										$idRegistro     = $row[4];
+										$status    = $row[5];
+										$total_pedido    = $row[6];
+										$total_recibido        = $row[7];
+										$diferencia = $row[8];
+										$activo      = $row[9];
 										$checado=($activo==1)?'checked':'';		
 										$desabilitar=($activo==0)?'disabled':'';
 										$claseDesabilita=($activo==0)?'desabilita':'';
 															?>
 				                      <tr>
-				                        <td >
+				                        <td>
 				                          <p id="<?php echo "tConsecutivo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
 				                          	<?php echo "$n"; ?>
 				                          </p>
 				                        </td>
 				                        <td>
-																<p id="<?php echo "tnombre".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-				                          	<?php echo $nombre; ?>
+																<p id="<?php echo "tPersona".$n; ?>" class="<?php echo $claseDesabilita; ?>">
+				                          	<?php echo $fecha; ?>
 				                          </p>
 				                        </td>
 				                        <td>
-																<p id="<?php echo "tcodigo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-				                          	<?php echo $codigo; ?>
-				                          </p>
-										  <td>
-																<p id="<?php echo "ttmedicamento".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-				                          	<?php echo $proveedor	; ?>
+																<p id="<?php echo "tCorreo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
+				                          	<?php echo $hora; ?>
 				                          </p>
 				                        </td>
+				                        <td>
+											<?php echo $almacen; ?>
+				                        </td>
+				                        <td>
+											<input type="button" value="<?php echo $status; ?>" class="btn btn-login btn-md" onclick="Cambiar( '<?php echo $idPedido ?>' );">
+										</td>
+										<td> <?php echo $total_pedido; ?> </td>
+										<td> <?php echo $total_recibido; ?> </td>
+										<td> <?php echo $diferencia; ?> </td>
 				                        <td>
 				                          <button id="<?php echo "boton".$n; ?>" <?php echo $desabilitar ?>  type="button" class="btn btn-login btn-sm" 
 				                          onclick="abrirModalEditar(
-																	' <?php echo $idMedicamento ?>',
-											  						'<?php echo $nombre ?>',
-				                          							'<?php echo $codigo ?>',
-				                          							'<?php echo $proveedor ?>',
-																	'<?php echo $idCatalogoMedicamento ?>'
+				                          							'<?php echo $idPedido ?>'
 				                          							);">
 				                          	<i class="far fa-edit"></i>
 				                          </button>
 				                        </td>
 				                        <td>
-											<input  data-size="small" data-style="android" value="<?php echo "$valor"; ?>" type="checkbox" <?php echo "$checado"; ?>  id="<?php echo "interruptor".$n; ?>"  data-toggle="toggle" data-on="Desactivar" data-off="Activar" data-onstyle="danger" data-offstyle="success" class="interruptor" data-width="100" onchange="status(<?php echo $n; ?>,<?php echo $idCatalogoMedicamento; ?>);">
+											<input  data-size="small" data-style="android" value="<?php echo "$valor"; ?>" type="checkbox" <?php echo "$checado"; ?>  id="<?php echo "interruptor".$n; ?>"  data-toggle="toggle" data-on="Desactivar" data-off="Activar" data-onstyle="danger" data-offstyle="success" class="interruptor" data-width="100" onchange="status(<?php echo $n; ?>,<?php echo $idPedido; ?>);">
+											
 				                        </td>
 				                      </tr>
 				                      <?php
@@ -91,11 +105,15 @@ $consulta=mysql_query("SELECT id_entrada,
 
 				                    <tfoot align="center">
 				                      <tr class="info">
-									  	<th>#</th>
-										<th>Medicamento</th>
-										<th>Cantidad</th>
-				                        <th>Surtidor</th>																				
-				                        <th>Editar</th> 
+				                        <th>#</th>
+				                        <th>Fecha de pedido</th>
+				                        <th>Hora de pedido</th>
+				                        <th>Almacen</th>
+				                        <th>Estatus de Pedido</th>
+				                        <th>Total pedido</th>
+				                        <th>Total recibido</th>
+				                        <th>Diferencia</th>
+				                        <th>Editar</th>
 				                        <th>Estatus</th>
 				                      </tr>
 				                    </tfoot>
@@ -126,26 +144,27 @@ $consulta=mysql_query("SELECT id_entrada,
                       // visible: false
                   }],
                   buttons: [
-                            {
-                                extend: 'pageLength',
-                                text: 'Registros',
-                                className: 'btn btn-default'
-                            },
+                            // {
+                            //     extend: 'pageLength',
+                            //     text: 'Registros',
+                            //     className: 'btn btn-default'
+                            // },
                           {
                               extend: 'excel',
                               text: 'Exportar a Excel',
-                              className: 'btn btn-default',
+                              className: 'btn btn-login',
                               title:'Bajas-Estaditicas',
                               exportOptions: {
                                   columns: ':visible'
                               }
                           },
                          {
-                              text: 'Nuevo Medicamento',
+                              text: 'Iniciar pedido',
                               action: function () {
-                                      ver_alta();
-                                      llenarMedicamento();
+                                      IniciarPedido();
+                                      Refresh();
                               },
+							  className: 'btn btn-login',
                               counter: 1
                           },
                   ]

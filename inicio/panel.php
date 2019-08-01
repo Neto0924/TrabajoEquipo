@@ -85,7 +85,7 @@
 							<div class="caja">
 								<i class="fas fa-arrow-alt-circle-left"></i>
 								<p>
-									<a href="">Salidas</a>
+									<a href="../bSalidas/index.php">Salidas</a>
 								</p>
 							</div>
 						</div>
@@ -94,7 +94,7 @@
 							<div class="caja">
 								<i class="fas fa-file-medical"></i>
 								<p>
-									<a href="">Recetas</a>
+									<a href="../bRecetas/index.php">Recetas</a>
 								</p>
 							</div>
 						</div>
@@ -127,7 +127,7 @@
 							<div class="caja">
 								<i class="fas fa-notes-medical"></i>
 								<p>
-									<a href="">Pedidos</a>
+									<a href="../bPedidos/index.php">Pedidos</a>
 								</p>
 							</div>
 						</div> 

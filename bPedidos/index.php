@@ -1,20 +1,19 @@
 <?php 
-include("../sesiones/verificar_sesion.php");
 include'../conexion/conexion.php';
-
+include '../sesiones/verificar_sesion.php';
+date_default_timezone_set('America/Monterrey');
 // Variables de configuración
-$titulo="Catálago de Entradas";
+$titulo="Catálago de Pedidos";
 $opcionMenu="A";
-
+$fecha=date("Y-m-d"); 
  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<link rel="shortcut icon" type="image/x-icon" href="../img/logo.png">
-	<title >Catalogo de Entradas </title>
+	<title>Plantilla</title>
 
-	<!-- Meta para compatibilidad en disposqqqitivos mobiles -->
+	<!-- Meta para compatibilidad en dispositivos mobiles -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap 3.3.5 -->
@@ -24,7 +23,7 @@ $opcionMenu="A";
 	<link rel="stylesheet" href="../plugins/fontawesome-free-5.8.1-web/css/all.min.css">
 
 	<!-- DataTableButtons -->
-     <link rel="stylesheet" href="../plugins/dataTableButtons/buttons.dataTables.min.css">
+     <!-- <link rel="stylesheet" href="../plugins/dataTableButtons/buttons.dataTables.min.css"> -->
 
     <!-- DataTables -->
     <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
@@ -51,8 +50,8 @@ $opcionMenu="A";
 		 ?>
 	</header><!-- /header -->	
 	<div class="container-fluid" >
-		<div class="row">
-			<div class="col-xs-0 col-sm-3 col-md-2 col-lg-2 vertical">
+	<div class="row" id="cuerpo" style="display:none">
+		<div class="col-xs-0 col-sm-3 col-md-2 col-lg-2 vertical" >
 			<?php 
 				include('menuv.php');
 			 ?>
@@ -64,40 +63,35 @@ $opcionMenu="A";
 			   <div class="contenido borde sombra">
 				    <div class="container-fluid">
 				        <section id="alta" style="display: none">
-            				<form id="frmAlta">
+            				<form id="frmAltaDetalle">
+            					<input type="text" id="ide">
 								<div class="row">
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-9">
+									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 										<div class="form-group">
-											<label for="idMedicamento">Nombre del medicamento:</label>
+											<label for="idMedicamento">Medicamento:</label>
 											<select  id="idMedicamento" class="select2 form-control " style="width: 100%">
-
+												
 											</select>
 										</div>
 									</div>
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 										<div class="form-group">
 											<label for="cantidad">Cantidad:</label>
-											<input type="text" id="cantidad" class="form-control " autofocus="" required="" placeholder="Cantidad que desea añadir">
+											<input type="text" id="cantidad" class="form-control " required="" placeholder="Cantidad necesaria">
 										</div>
 									</div>
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-										<div class="form-group">
-										<label for="proveedor">Proveedor:</label>
-										<input type="text" id="proveedor" class="form-control " autofocus="" required="" placeholder="Escribe el proveedor">
-										</div>
-									</div>
-									
+									<hr class="linea">
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<button type="button" id="btnLista" class="btn btn-login  btn-flat  pull-left">Lista de Sucursales</button>
-										<input type="submit" class="btn btn-login  btn-flat  pull-right" value="Guardar Información">
+										<button type="button" id="btnLista" class="btn btn-login  btn-flat  pull-left">Lista de Detalles</button>
+										<input type="submit" class="btn btn-login  btn-flat  pull-right" value="Guardar Información">										
 									</div>
 								</div>
             				</form>
 				        </section>
 
-				        <section id="lista" style="width: 100%">
+				        <section id="lista">
             
 				        </section>
 				    </div>
@@ -114,37 +108,77 @@ $opcionMenu="A";
 	</footer>
 
 	<!-- Modal -->
-	<div id="modalEditar" class="modal fade" role="dialog">
+	<div id="modalEstatus" class="modal fade" role="dialog">
 	  <div class="modal-dialog modal-lg">
 
 	    <!-- Modal content-->
-	    <form id="frmActuliza">
+	    <form id="frmActulizaEstatus">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Editar datos del catalogo</h4>
+	        <h4 class="modal-title">Editar estatus del pedido</h4>
 	      </div>
 	      <div class="modal-body">
 				<input type="hidden" id="idE">
 				<div class="row">
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-6">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="form-group">
+											<label for="detalle">Selecciona el Estatus:</label>
+											<select  id="estatus" class="select2 form-control " style="width: 100%">
+												<option value="En Proceso">En Proceso</option>
+												<option value="Entregado">Entregado</option>
+												<option value="Completado">Completado</option>
+												<option value="Parcial">Parcial</option>
+												<option value="Cancelado">Cancelado</option>
+											</select>
+										</div>
+									</div>
+					<hr class="linea">
+				</div>
+	      </div>
+	      <div class="modal-footer">
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" id="btnCerrar" class="btn btn-login  btn-flat  pull-left" data-dismiss="modal">Cerrar</button>
+						<input type="submit" class="btn btn-login  btn-flat  pull-right" value="Actualizar Información">	
+					</div>
+				</div>
+	      </div>
+	    </div>
+		</form>
+	  </div>
+	</div>
+	<!-- Modal -->
+	<div id="modalDetalle" class="modal fade" role="dialog">
+	  <div class="modal-dialog modal-lg">
+
+	    <!-- Modal content-->
+	    <form id="frmActulizaDetalle">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Editar el detalle del pedido</h4>
+	      </div>
+	      <div class="modal-body">
+				<input type="hidden" id="ideE">
+				<input type="hidden" id="idDetalle">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 						<div class="form-group">
-							<label for="nombreE">Nombre del medicamento:</label>
-							<select type="text" id="idMedicamentoE" class="form-control select2" style="width: 100%" required="">
-								
-							</select>
+							<label for="codigoD">Código Medicamento:</label>
+							<input type="text" id="codigoD" class="form-control " required="" disabled="" placeholder="Código medicamento">
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 						<div class="form-group">
-							<label for="abreviaturaE">Cantidad:</label>
-							<input type="text" id="codigoE" class="form-control " disabled="" placeholder="Escribe el codigo">
+							<label for="cantidadD">Cantidad:</label>
+							<input type="text" id="cantidadD" class="form-control " required="" disabled="" placeholder="Cantidad necesaria">
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 						<div class="form-group">
-						<label for="Eproveedor">Surtidor:</label>
-						<input type="text" id="Eproveedor" class="form-control " autofocus="" required="" placeholder="Escribe el proveedor">	
+							<label for="cantidadRD">Cantidad Recibida:</label>
+							<input type="text" id="cantidadRD" class="form-control " required=""   placeholder="Cantidad recibida">
 						</div>
 					</div>
 					<hr class="linea">
@@ -162,8 +196,6 @@ $opcionMenu="A";
 		</form>
 	  </div>
 	</div>
-	<!-- Modal -->
-
 	<!-- ENLACE A ARCHIVOS JS -->
 
 	<!-- jquery -->
@@ -203,7 +235,7 @@ $opcionMenu="A";
     <script src="funciones.js"></script>
     <script src="../js/menu.js"></script>
     <script src="../js/precarga.js"></script>
-    <script src="../js/salir.js"></script>
+		<script src="../js/salir.js"></script>
 
     <!-- LLAMADAS A FUNCIONES E INICIALIZACION DE COMPONENTES -->
 
@@ -211,7 +243,26 @@ $opcionMenu="A";
 	<script type="text/javascript">
 	  llenar_lista();
 	</script>
-
+	<script>
+		function llenar_persona()
+			{
+			    // alert(idRepre);
+			    $.ajax({
+			        url : 'comboPersonas.php',
+			        // data : {'id':id},
+			        type : 'POST',
+			        dataType : 'html',
+			        success : function(respuesta) {
+			            // console.log(respuesta);
+			            $("#idMedicamento").empty();
+			            $("#idMedicamento").html(respuesta);      
+			        },
+			        error : function(xhr, status) {
+			            alert('Disculpe, existió un problema');
+			        },
+			    });
+			}
+	</script>
     <!-- Inicializador de elemento -->
      <script>
       $(function () {
@@ -219,12 +270,23 @@ $opcionMenu="A";
         
       });
     </script> 
-
+	<script>
+		function Cambiar(ide){
+            $("#modalEstatus").modal("show"); 
+            $("#idE").val(ide);
+            
+        }
+	</script>
 	<script>
 		var letra ='<?php echo $opcionMenu; ?>';
 		$(document).ready(function() { menuActivo(letra); });
 	</script>
 
 	<script type="text/javascript" src="../plugins/stacktable/stacktable.js"></script> 
+	<script>
+		window.onload = function() {
+			$("#cuerpo").fadeIn("slow");
+		};	
+	</script>
 </body>
 </html>

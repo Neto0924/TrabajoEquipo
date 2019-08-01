@@ -19,7 +19,7 @@ $fecha=date("Y-m-d");
 $hora=date ("H:i:s");
 
 mysql_query("SET NAMES utf8");
- $insertar = mysql_query("UPDATE entradas SET
+ $insertar = mysql_query("UPDATE farmacias SET
 							id_medicamento ='$nsucursal',
 							proveedor='$ubicacion',
 							encargado='$encargado',

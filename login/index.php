@@ -40,18 +40,12 @@
 					</div>
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-xs-3 col-md-2">
-								<button type="button" class="btn btn-login   pull-left" id="btnReg" onclick="verRegistros();">
-									<i class="fa fa-users"></i>
-									Registros
-								</button>
-			          		</div>	
-							<div class="col-md-8">
+							<div class="col-md-6">
 								<center>
 									<input id="chkContra"  onchange='evaluarCheck(this.value)' data-on="Si" data-off="No" type="checkbox" checked data-toggle="toggle" data-size="mini" value='no'><label class="colorLetra"> &nbsp; Cambiar Contraseña</label>	
 								</center>
 							</div>			
-		              		<div class="col-md-2">
+		              		<div class="col-md-6">
 		              			<button type="submit" class="btn btn-login  btn-flat  pull-right" id="btnIngresar">
 			              			<i class="fas fa-lock-open"></i>
 			              			Ingresar
